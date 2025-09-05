@@ -31,7 +31,14 @@ async def get_current_weather_json() -> str:
         except Exception as e:
             logging.error(f"Error fetching weather: {e}")
             return json.dumps({"error": "Failed to fetch weather data"})
-       
+
+@mcp.prompt("What's the weather like?")
+async def prompt_weather() -> str:
+    return await get_current_weather_json()
+
+@mcp.resource("resource_weather")
+async def resource_weather() -> str:
+    return await get_current_weather_json()
 
 if __name__ == "__main__":
     # Initialize and run the server
